@@ -21,6 +21,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class Splash extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
 
@@ -110,7 +112,7 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
         }
     }
 
-    private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
+    private void firebaseAuthWithGoogle(final GoogleSignInAccount acct) {
         Log.d(TAG, "firebaseAuthWithGoogle:" + acct.getId());
 
 //        showProgressDialog();
@@ -130,6 +132,11 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
                             Log.w(TAG, "signInWithCredential", task.getException());
                             Toast.makeText(Splash.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
+                        } else{
+                            FirebaseUser mUser = mAuth.getCurrentUser();
+                            DatabaseReference mUsers = FirebaseDatabase.getInstance().getReference().child("users").child(mUser.getUid());
+                            mUsers.child("uid").setValue(mUser.getUid());
+                            mUsers.child("name").setValue(mUser.getDisplayName());
                         }
                         // [START_EXCLUDE]
 //                        hideProgressDialog();

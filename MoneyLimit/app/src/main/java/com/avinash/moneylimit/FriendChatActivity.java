@@ -43,9 +43,15 @@ public class FriendChatActivity extends AppCompatActivity {
 
         Intent i = getIntent();
         String uid = i.getStringExtra("uid");
+        String chat_key;
+        if (uid.compareTo(user.getUid()) > 0 ){
+            chat_key = uid+ user.getUid();
+        }else{
+            chat_key = user.getUid()+uid;
+        }
 
         mData = mDataBase.child("user_chats");
-        mChat = mData.child(uid+user.getUid());
+        mChat = mData.child(chat_key);
 
         recyclerView = (RecyclerView) findViewById(R.id.rv_messages);
         recyclerView.setHasFixedSize(true);
@@ -108,6 +114,7 @@ public class FriendChatActivity extends AppCompatActivity {
         message.setTimestamp(new Date().toString());
 
         newMessage.setValue(message);
+        et_message.setText("");
 
     }
 }
