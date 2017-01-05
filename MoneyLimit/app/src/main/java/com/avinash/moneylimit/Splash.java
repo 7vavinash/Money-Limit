@@ -69,6 +69,7 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
                     Intent i = new Intent(Splash.this, MainActivity.class);
                     startActivity(i);
+                    finish();
                 } else {
                     // User is signed out
                     Log.d(TAG, "onAuthStateChanged:signed_out");

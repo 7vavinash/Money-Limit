@@ -25,7 +25,7 @@ public class MessageViewHolder extends RecyclerView.ViewHolder {
     public void bindToMessage(Message message) {
         tv_sender.setText(message.getSender());
         tv_message.setText(message.getMessage());
-        tv_timestamp.setText(String.valueOf(message.getTimestamp()));
+        tv_timestamp.setText(message.getTimestamp());
 
     }
 }
